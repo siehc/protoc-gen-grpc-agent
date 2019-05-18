@@ -17,33 +17,6 @@ This will place two binaries in your `$GOBIN`;
 Make sure that your `$GOBIN` is in your `$PATH`.
 
 ## Usage
-1. Add a [`google.api.http`](https://github.com/googleapis/googleapis/blob/master/google/api/http.proto#L46)
-annotation to your .proto file
-
-   your_service.proto:
-   ```diff
-    syntax = "proto3";
-    package example;
-   +
-   +import "google/api/annotations.proto";
-   +
-    message StringMessage {
-      string value = 1;
-    }
-
-    service YourService {
-   -  rpc Echo(StringMessage) returns (StringMessage) {}
-   +  rpc Echo(StringMessage) returns (StringMessage) {
-   +    option (google.api.http) = {
-   +      post: "/anything"
-   +      body: "*"
-   +    };
-   +  }
-    }
-   ```
-
-    This is a `MUST`, or nothing will be generated. Althought option field is not really used in this plugin. But you have to set it in any value to make it work properly.
-
 1. Generate GRPC stub and agent
 
    ```sh
